@@ -1,6 +1,6 @@
 {
   "name": "cloudfront-updator",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Simple Amazon CloudFront distribution updator",
   "main": "dist/index.js",
   "engines": {
