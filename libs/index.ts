@@ -11,7 +11,7 @@ const sleep = async (time = 1000) => {
   return new Promise(resolve => setTimeout(resolve, time))
 }
 
-export namespace CloudFrontUpdator {
+export namespace interfaces {
   // To Write any method to the new CloudFront distribution config
   export type UpdatorFunction = (distributionConfig: DistributionConfig) => DistributionConfig | null | Promise<DistributionConfig | null>
 
@@ -40,12 +40,12 @@ export namespace CloudFrontUpdator {
   }
 }
 
-import UpdatorFunction = CloudFrontUpdator.UpdatorFunction
-import FilterCondition = CloudFrontUpdator.FilterCondition
-import TaskType = CloudFrontUpdator.TaskType
-import Workers = CloudFrontUpdator.Workers
-import Clients = CloudFrontUpdator.Clients
-import Config = CloudFrontUpdator.Config
+import UpdatorFunction = interfaces.UpdatorFunction
+import FilterCondition = interfaces.FilterCondition
+import TaskType = interfaces.TaskType
+import Workers = interfaces.Workers
+import Clients = interfaces.Clients
+import Config = interfaces.Config
 
 const defaultClients: Clients = {
   cfClient: new CloudFront(),
@@ -55,7 +55,7 @@ const defaultConfig: Config = {
   debugMode: false,
   taskType: 'sequential'
 }
-export class UpdateCloudFront {
+export class CloudFrontUpdator {
   // Logger
   protected log: Function
 
@@ -214,3 +214,5 @@ export class UpdateCloudFront {
     this.log(`Update target: ${targetNumber}`)
   }
 }
+
+export default CloudFrontUpdator
