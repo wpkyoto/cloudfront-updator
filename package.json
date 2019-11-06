@@ -1,7 +1,7 @@
 {
-  "name": "YOUR-PROJECT-NAME",
+  "name": "cloudfront-updator",
   "version": "0.0.0",
-  "description": "",
+  "description": "Simple Amazon CloudFront distribution updator",
   "main": "dist/index.js",
   "engines": {
     "node": ">=8.16.1 || ^10.13.0 || >=11.10.1"
@@ -25,11 +25,11 @@
   },
   "keywords": [],
   "bugs": {
-    "url": "https://github.com/hideokamoto/YOUR-PROJECT-NAME/issues"
+    "url": "https://github.com/hideokamoto/cloudfront-updator/issues"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/hideokamoto/YOUR-PROJECT-NAME.git"
+    "url": "https://github.com/hideokamoto/cloudfront-updator.git"
   },
   "author": "Hidetaka Okamoto <info@wp-kyoto.net> (https://wp-kyoto.net)",
   "license": "MIT",
@@ -84,5 +84,9 @@
     "tslib": "^1.10.0",
     "typedoc": "^0.15.0",
     "typescript": "^3.6.2"
+  },
+  "dependencies": {
+    "@hideokamoto/sequential-promise": "^1.0.1",
+    "aws-sdk": "^2.564.0"
   }
 }
