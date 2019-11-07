@@ -28,8 +28,14 @@ const client = new CloudFrontUpdator({
   // You can filter your distributions buy the function
   filter: (distribution) => distribution.Status === 'deployed'
 }, {
+  // Not running cloudfront.updateDistribution
   debugMode: true | false, // [default] false
-  taskType: 'parallel' | 'sequential' // [default] sequential
+
+  // How to update a several distribution, parallel is fast but sometime the AWS API will be throttle
+  taskType: 'parallel' | 'sequential', // [default] sequential
+
+  // If you want to enable / disable your distribution, you should set true
+  allowSensitiveAction: false, // [default] false
 })
 ```
 
