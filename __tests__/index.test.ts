@@ -52,15 +52,58 @@ describe('dummy', () => {
   }, condition, {
     cfClient: new DummyClient() as any as AWS.CloudFront
   })
-  it('should work', async () => {
+  it('should nothing to do', async () => {
     const dist = {} as AWS.CloudFront.Distribution
     await expect(client.updateDistribution(dist)).resolves.toBe(undefined)
+  })
+  it('should update', async () => {
+    client = new CloudFrontUpdator({
+      updator: (id, conf) => {
+        console.log(id)
+        conf.HttpVersion = 'http2'
+        return conf
+      },
+      filter
+    }, condition, {
+      cfClient: new DummyClient() as any as AWS.CloudFront
+    })
+    const dist = {
+      Id: 'ETEST'
+    } as AWS.CloudFront.Distribution
+    await expect(client.updateDistribution(dist)).resolves.toBe(undefined)
+  })
+  it('should update', async () => {
+    client = new CloudFrontUpdator({
+      updator: (id, conf) => {
+        console.log(id)
+        conf.Enabled = false
+        conf.HttpVersion = 'http2'
+        return conf
+      },
+      filter
+    }, {...condition, allowSensitiveAction: true}, {
+      cfClient: new DummyClient() as any as AWS.CloudFront
+    })
+    const dist = {
+      Id: 'ETEST'
+    } as AWS.CloudFront.Distribution
+    await client.updateDistribution(dist)
+    expect(JSON.stringify(client.getDiff())).toBe(JSON.stringify({
+        "added": {
+          "HttpVersion": "http2"
+        },
+        "deleted": {},
+        "updated": {
+          "Enabled": false
+        }
+      }))
   })
   it('should throw error', async () => {
     client = new CloudFrontUpdator({
       updator: (id, conf) => {
         console.log(id)
         conf.Enabled = false
+        conf.HttpVersion = 'http2'
         return conf
       },
       filter

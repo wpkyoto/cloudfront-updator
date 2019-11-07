@@ -1,6 +1,7 @@
 import 'tslib'
 import { CloudFront } from 'aws-sdk'
 import sequentialPromise from '@hideokamoto/sequential-promise'
+import { detailedDiff } from 'deep-object-diff'
 
 import DistributionSummaryList = CloudFront.DistributionSummaryList
 import DistributionSummary = CloudFront.DistributionSummary
@@ -80,6 +81,9 @@ export class CloudFrontUpdator {
   // Allow disabled/enabled distribution
   protected allowSensitiveAction: boolean
 
+  // Dry run diff
+  protected diff: any = null
+
   constructor (workers: Workers, config?: Partial<Config>, clientConfigs?: Partial<Clients>) {
     const clients = {
       ...defaultClients,
@@ -113,6 +117,9 @@ export class CloudFrontUpdator {
       if (!ETag) throw new Error('no ETag')
       const beforeConfig = Object.assign({}, DistributionConfig)
       const config = await this.updator(distribution.Id, DistributionConfig)
+      if (this.debugMode && config) {
+        this.diff = detailedDiff(beforeConfig, config)
+      }
       if (!this.allowSensitiveAction && config) {
         if (beforeConfig.Enabled !== config.Enabled) {
           const err = 'You can not allow the action, please set \'allowSensitiveAction\' option in the constructor'
@@ -135,15 +142,22 @@ export class CloudFrontUpdator {
   }
 
   /**
+   * Just get diff
+   */
+  public getDiff () {
+    return this.diff
+  }
+
+  /**
    * Update処理
    * @param distributionId
    * @param ETag
    * @param distributionConfig
    * @param retryCount
    */
-  protected async updateCloudFront (distributionId: string, ETag: string, distributionConfig: DistributionConfig, retryCount = 0): Promise<void> {
+  protected async updateCloudFront (distributionId: string, ETag: string, distributionConfig: DistributionConfig, retryCount = 0): Promise<void | any> {
     if (this.debugMode) {
-      this.log('debug')
+      this.log(this.diff)
       return
     }
     try {
