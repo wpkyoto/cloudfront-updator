@@ -111,9 +111,10 @@ export class CloudFrontUpdator {
       }).promise()
       if (!DistributionConfig) throw new Error('No such distribution')
       if (!ETag) throw new Error('no ETag')
+      const beforeConfig = Object.assign({}, DistributionConfig)
       const config = await this.updator(distribution.Id, DistributionConfig)
       if (!this.allowSensitiveAction && config) {
-        if (DistributionConfig.Enabled !== config.Enabled) {
+        if (beforeConfig.Enabled !== config.Enabled) {
           const err = 'You can not allow the action, please set \'allowSensitiveAction\' option in the constructor'
           this.log(err)
           throw err
