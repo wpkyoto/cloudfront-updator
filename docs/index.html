@@ -115,6 +115,36 @@
 				<pre><code class="language-typescript"><span class="hljs-keyword">const</span> {Distribution: dist} = <span class="hljs-keyword">await</span> (<span class="hljs-keyword">new</span> CloudFront()).getDistribution({Id: <span class="hljs-string">'EXXXXXX'</span>}).promise()
 <span class="hljs-keyword">if</span> (!dist) <span class="hljs-keyword">return</span>
 <span class="hljs-keyword">await</span> client.updateDistribution(dist)</code></pre>
+				<a href="#debug--dry-run" id="debug--dry-run" style="color: inherit; text-decoration: none;">
+					<h3>Debug / Dry run</h3>
+				</a>
+				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> CloudFrontUpdator <span class="hljs-keyword">from</span> <span class="hljs-string">'cloudfront-updator'</span>
+
+<span class="hljs-keyword">const</span> client = <span class="hljs-keyword">new</span> CloudFrontUpdator({
+  <span class="hljs-comment">// You can define your expected the Distribution config</span>
+  updator: <span class="hljs-function">(<span class="hljs-params">id, DistributionConfig</span>) =&gt;</span> {
+    DistributionConfig.HttpVersion = <span class="hljs-string">'http2'</span>
+    <span class="hljs-keyword">return</span> DistributionConfig
+  },
+  <span class="hljs-comment">// You can filter your distributions buy the function</span>
+  filter: <span class="hljs-function">(<span class="hljs-params">distribution</span>) =&gt;</span> distribution.Status === <span class="hljs-string">'deployed'</span>
+}, {
+  debugMode: <span class="hljs-literal">true</span>,
+})
+
+<span class="hljs-keyword">const</span> {Distribution: dist} = <span class="hljs-keyword">await</span> (<span class="hljs-keyword">new</span> CloudFront()).getDistribution({Id: <span class="hljs-string">'EXXXXXX'</span>}).promise()
+<span class="hljs-keyword">if</span> (!dist) <span class="hljs-keyword">return</span>
+<span class="hljs-keyword">await</span> client.updateDistribution(dist)
+<span class="hljs-keyword">const</span> diff = client.getDiff()
+
+{
+  <span class="hljs-string">"added"</span>: {},
+  <span class="hljs-string">"deleted"</span>: {},
+  <span class="hljs-string">"updated"</span>: {
+    <span class="hljs-string">"HttpVersion"</span>: <span class="hljs-string">"http2"</span>
+  }
+}
+</code></pre>
 				<a href="#contribution" id="contribution" style="color: inherit; text-decoration: none;">
 					<h2>Contribution</h2>
 				</a>

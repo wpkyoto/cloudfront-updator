@@ -55,6 +55,38 @@ if (!dist) return
 await client.updateDistribution(dist)
 ```
 
+### Debug / Dry run
+
+```typescript
+import CloudFrontUpdator from 'cloudfront-updator'
+
+const client = new CloudFrontUpdator({
+  // You can define your expected the Distribution config
+  updator: (id, DistributionConfig) => {
+    DistributionConfig.HttpVersion = 'http2'
+    return DistributionConfig
+  },
+  // You can filter your distributions buy the function
+  filter: (distribution) => distribution.Status === 'deployed'
+}, {
+  debugMode: true,
+})
+
+const {Distribution: dist} = await (new CloudFront()).getDistribution({Id: 'EXXXXXX'}).promise()
+if (!dist) return
+await client.updateDistribution(dist)
+const diff = client.getDiff()
+
+{
+  "added": {},
+  "deleted": {},
+  "updated": {
+    "HttpVersion": "http2"
+  }
+}
+
+```
+
 ## Contribution
 
 ```bash
