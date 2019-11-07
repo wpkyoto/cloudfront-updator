@@ -1,3 +1,14 @@
+<a name="1.1.0"></a>
+# [1.1.0](https://github.com/hideokamoto/cloudfront-updator/compare/v1.0.0...v1.1.0) (2019-11-07)
+
+
+### Features
+
+* block sensitive action ([021947f](https://github.com/hideokamoto/cloudfront-updator/commit/021947f))
+* show diff on debug mode ([e3f6008](https://github.com/hideokamoto/cloudfront-updator/commit/e3f6008))
+
+
+
 <a name="1.0.0"></a>
 # [1.0.0](https://github.com/hideokamoto/cloudfront-updator/compare/v0.1.0...v1.0.0) (2019-11-07)
 
