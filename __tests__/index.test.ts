@@ -44,7 +44,7 @@ class DummyClient {
 }
 describe('dummy', () => {
   // @ts-ignore
-  const updator: interfaces.UpdatorFunction = (id, conf) => conf
+  const updator: interfaces.UpdatorFunction = (dist, conf) => conf
   const filter: interfaces.FilterCondition = () => true
   let client = new CloudFrontUpdator({
     updator,
@@ -58,7 +58,7 @@ describe('dummy', () => {
   })
   it('should update', async () => {
     client = new CloudFrontUpdator({
-      updator: (id, conf) => {
+      updator: ({id}, conf) => {
         console.log(id)
         conf.HttpVersion = 'http2'
         return conf
@@ -74,7 +74,7 @@ describe('dummy', () => {
   })
   it('should update', async () => {
     client = new CloudFrontUpdator({
-      updator: (id, conf) => {
+      updator: ({id}, conf) => {
         console.log(id)
         conf.Enabled = false
         conf.HttpVersion = 'http2'
@@ -100,7 +100,7 @@ describe('dummy', () => {
   })
   it('should throw error', async () => {
     client = new CloudFrontUpdator({
-      updator: (id, conf) => {
+      updator: ({id}, conf) => {
         console.log(id)
         conf.Enabled = false
         conf.HttpVersion = 'http2'

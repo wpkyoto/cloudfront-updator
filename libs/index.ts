@@ -14,7 +14,7 @@ const sleep = async (time = 1000) => {
 
 export namespace interfaces {
   // To Write any method to the new CloudFront distribution config
-  export type UpdatorFunction = (distributionId: string, distributionConfig: DistributionConfig) => DistributionConfig | null | Promise<DistributionConfig | null>
+  export type UpdatorFunction = (dist: {id: string; arn: string}, distributionConfig: DistributionConfig) => DistributionConfig | null | Promise<DistributionConfig | null>
 
   // Filter your distribution to find out a expected distributions
   export type FilterCondition = (distribution: Distribution | DistributionSummary) => boolean | Promise<boolean>
@@ -116,7 +116,10 @@ export class CloudFrontUpdator {
       if (!DistributionConfig) throw new Error('No such distribution')
       if (!ETag) throw new Error('no ETag')
       const beforeConfig = Object.assign({}, DistributionConfig)
-      const config = await this.updator(distribution.Id, DistributionConfig)
+      const config = await this.updator({
+        id: distribution.Id,
+        arn: distribution.ARN
+      }, DistributionConfig)
       if (this.debugMode && config) {
         this.diff = detailedDiff(beforeConfig, config)
       }
@@ -128,7 +131,7 @@ export class CloudFrontUpdator {
         }
       }
       return {
-        config: await this.updator(distribution.Id, DistributionConfig),
+        config,
         ETag
       }
     } catch (e) {

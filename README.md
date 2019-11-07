@@ -62,7 +62,7 @@ import CloudFrontUpdator from 'cloudfront-updator'
 
 const client = new CloudFrontUpdator({
   // You can define your expected the Distribution config
-  updator: (id, DistributionConfig) => {
+  updator: ({id, arn}, DistributionConfig) => {
     DistributionConfig.HttpVersion = 'http2'
     return DistributionConfig
   },
