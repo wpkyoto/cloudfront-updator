@@ -21,7 +21,7 @@ import CloudFrontUpdator from 'cloudfront-updator'
 
 const client = new CloudFrontUpdator({
   // You can define your expected the Distribution config
-  updator: (DistributionConfig) => {
+  updator: (id, DistributionConfig) => {
     DistributionConfig.Enabled  = false
     return DistributionConfig
   },
