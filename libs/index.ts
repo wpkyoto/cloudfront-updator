@@ -37,6 +37,8 @@ export namespace interfaces {
   export interface Config {
     debugMode: boolean;
     taskType: TaskType;
+    // Distributionのdisabledなどの繊細な操作
+    allowSensitiveAction: boolean;
   }
 }
 
@@ -53,7 +55,8 @@ const defaultClients: Clients = {
 }
 const defaultConfig: Config = {
   debugMode: false,
-  taskType: 'sequential'
+  taskType: 'sequential',
+  allowSensitiveAction: false
 }
 export class CloudFrontUpdator {
   // Logger
@@ -74,6 +77,9 @@ export class CloudFrontUpdator {
   // Task type
   protected taskType: TaskType
 
+  // Allow disabled/enabled distribution
+  protected allowSensitiveAction: boolean
+
   constructor (workers: Workers, config?: Partial<Config>, clientConfigs?: Partial<Clients>) {
     const clients = {
       ...defaultClients,
@@ -88,6 +94,7 @@ export class CloudFrontUpdator {
     this.debugMode = conf.debugMode
     this.updator = workers.updator
     this.taskType = conf.taskType
+    this.allowSensitiveAction = conf.allowSensitiveAction
     if (workers.filter) this.filter = workers.filter
   }
 
@@ -104,6 +111,14 @@ export class CloudFrontUpdator {
       }).promise()
       if (!DistributionConfig) throw new Error('No such distribution')
       if (!ETag) throw new Error('no ETag')
+      const config = await this.updator(distribution.Id, DistributionConfig)
+      if (!this.allowSensitiveAction && config) {
+        if (DistributionConfig.Enabled !== config.Enabled) {
+          const err = 'You can not allow the action, please set \'allowSensitiveAction\' option in the constructor'
+          this.log(err)
+          throw err
+        }
+      }
       return {
         config: await this.updator(distribution.Id, DistributionConfig),
         ETag
