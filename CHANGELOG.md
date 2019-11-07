@@ -1,3 +1,13 @@
+<a name="1.0.0"></a>
+# [1.0.0](https://github.com/hideokamoto/cloudfront-updator/compare/v0.1.0...v1.0.0) (2019-11-07)
+
+
+### Features
+
+* [breaking-change]updator can use distribution id ([76b7895](https://github.com/hideokamoto/cloudfront-updator/commit/76b7895))
+
+
+
 <a name="0.1.0"></a>
 # [0.1.0](https://github.com/hideokamoto/cloudfront-updator/compare/aec8518...v0.1.0) (2019-11-06)
 
