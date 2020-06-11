@@ -10,8 +10,8 @@ jobs:
     steps:
       - uses: actions/checkout@v1
 
-      - name: "npm ci"
-        run: npm ci
+      - name: "yarn install --frozen-lockfile"
+        run: yarn install --frozen-lockfile
 
       - name: "npm run semantic-release"
         run: npm run semantic-release
