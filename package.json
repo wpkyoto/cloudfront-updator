@@ -21,7 +21,8 @@
     "create:changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0 && git add CHANGELOG.md && git commit -m 'docs: update changelog'",
     "create:ogp": "npm run create:ogp:dark && npm run create:ogp:light",
     "create:ogp:dark": "npx @kamataryo/gh-ogp dark > ogp_dark.png",
-    "create:ogp:light": "npx @kamataryo/gh-ogp light > ogp_light.png"
+    "create:ogp:light": "npx @kamataryo/gh-ogp light > ogp_light.png",
+    "semantic-release": "semantic-release"
   },
   "keywords": [],
   "bugs": {
@@ -80,6 +81,7 @@
     "lint-staged": "^9.2.5",
     "rollup": "^1.20.3",
     "rollup-plugin-typescript2": "^0.24.0",
+    "semantic-release": "^17.0.8",
     "ts-jest": "^24.0.2",
     "tslib": "^1.10.0",
     "typedoc": "^0.15.0",
