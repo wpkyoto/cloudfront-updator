@@ -25,11 +25,11 @@
   },
   "keywords": [],
   "bugs": {
-    "url": "https://github.com/hideokamoto/cloudfront-updator/issues"
+    "url": "https://github.com/wpkyoto/cloudfront-updator/issues"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/hideokamoto/cloudfront-updator.git"
+    "url": "https://github.com/wpkyoto/cloudfront-updator.git"
   },
   "author": "Hidetaka Okamoto <info@wp-kyoto.net> (https://wp-kyoto.net)",
   "license": "MIT",
