@@ -85,7 +85,7 @@
     "tslib": "2.2.0",
     "typedoc": "0.20.36",
     "semantic-release": "17.4.3",
-    "typescript": "3.9.7"
+    "typescript": "3.9.10"
   },
   "dependencies": {
     "@hideokamoto/sequential-promise": "^1.1.0",
