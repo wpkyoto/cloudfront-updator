@@ -13,7 +13,7 @@ const sleep = async (time = 1000) => {
 }
 
 export namespace interfaces {
-  export type LoggerFunction = (...str: string[]) => void;
+  export type LoggerFunction = (...str: any[]) => void;
   // To Write any method to the new CloudFront distribution config
   export type UpdatorFunction = (dist: {id: string; arn: string}, distributionConfig: DistributionConfig) => DistributionConfig | null | Promise<DistributionConfig | null>
 
