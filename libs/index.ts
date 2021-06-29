@@ -1,6 +1,6 @@
 import 'tslib'
 import { CloudFront } from 'aws-sdk'
-import sequentialPromise from '@hideokamoto/sequential-promise'
+import { sequentialPromiseWithChunk } from '@hideokamoto/sequential-promise'
 import { detailedDiff } from 'deep-object-diff'
 
 import DistributionSummaryList = CloudFront.DistributionSummaryList
@@ -13,6 +13,7 @@ const sleep = async (time = 1000) => {
 }
 
 export namespace interfaces {
+  export type LoggerFunction = (...str: any[]) => void;
   // To Write any method to the new CloudFront distribution config
   export type UpdatorFunction = (dist: {id: string; arn: string}, distributionConfig: DistributionConfig) => DistributionConfig | null | Promise<DistributionConfig | null>
 
@@ -31,7 +32,7 @@ export namespace interfaces {
   // for constructor, to replace worker clients
   export interface Clients {
     cfClient: CloudFront;
-    logger: Function;
+    logger: LoggerFunction
   }
 
   // for constructor, to update task config
@@ -45,6 +46,7 @@ export namespace interfaces {
 
 import UpdatorFunction = interfaces.UpdatorFunction
 import FilterCondition = interfaces.FilterCondition
+import LoggerFunction = interfaces.LoggerFunction
 import TaskType = interfaces.TaskType
 import Workers = interfaces.Workers
 import Clients = interfaces.Clients
@@ -61,7 +63,7 @@ const defaultConfig: Config = {
 }
 export class CloudFrontUpdator {
   // Logger
-  protected log: Function
+  protected log: LoggerFunction
 
   // CloudFront API Client (AWS-SDK)
   protected cfClient: CloudFront
@@ -225,17 +227,19 @@ export class CloudFrontUpdator {
   /**
    * Update all distribution
    */
-  public async updateAllDistribution (): Promise<void> {
+  public async updateAllDistribution (chunkSize = 1): Promise<void> {
     const distributions = await this.listAllDistributions()
     this.log(`Distirbution Count: ${distributions.length}`)
     let targetNumber = 0
     const filteredFlag = true
     if (this.taskType === 'sequential') {
-      await sequentialPromise(distributions, async (distribution) => {
+      await sequentialPromiseWithChunk(distributions, async (distribution) => {
         if (!await this.isTargetDistribution(distribution)) return
         targetNumber += 1
         this.log(`No. ${targetNumber}: ${distribution.Id}`)
         await this.updateDistribution(distribution, filteredFlag)
+      }, {
+        chunkSize: chunkSize
       })
     } else if (this.taskType === 'parallel') {
       await Promise.all(distributions.map(async (distribution) => {

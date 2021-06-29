@@ -88,8 +88,8 @@
     "typescript": "3.9.7"
   },
   "dependencies": {
-    "@hideokamoto/sequential-promise": "^1.0.1",
-    "aws-sdk": "^2.925.0",
+    "@hideokamoto/sequential-promise": "^1.1.0",
+    "aws-sdk": "^2.936.0",
     "deep-object-diff": "^1.1.0"
   }
 }
