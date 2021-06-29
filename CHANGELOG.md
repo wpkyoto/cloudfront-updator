@@ -1,3 +1,12 @@
+## [2.1.1](https://github.com/wpkyoto/cloudfront-updator/compare/v2.1.0...v2.1.1) (2021-06-29)
+
+
+### Bug Fixes
+
+* update sequential module ([5349927](https://github.com/wpkyoto/cloudfront-updator/commit/5349927854fe14b4a386a980b205ef74181be886))
+
+
+
 # [2.1.0](https://github.com/wpkyoto/cloudfront-updator/compare/v2.0.0...v2.1.0) (2021-06-29)
 
 
