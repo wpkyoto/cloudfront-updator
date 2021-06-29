@@ -84,7 +84,7 @@
     "ts-jest": "26.5.6",
     "tslib": "2.2.0",
     "typedoc": "0.20.36",
-    "semantic-release": "17.4.3",
+    "semantic-release": "17.4.4",
     "typescript": "3.9.10"
   },
   "dependencies": {
