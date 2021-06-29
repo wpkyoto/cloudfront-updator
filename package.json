@@ -81,15 +81,15 @@
     "lint-staged": "10.5.1",
     "rollup": "2.33.2",
     "rollup-plugin-typescript2": "0.29.0",
+    "semantic-release": "17.4.3",
     "ts-jest": "26.4.4",
     "tslib": "2.0.3",
     "typedoc": "0.19.2",
-    "semantic-release": "17.4.3",
     "typescript": "3.9.7"
   },
   "dependencies": {
-    "@hideokamoto/sequential-promise": "^1.0.1",
-    "aws-sdk": "^2.925.0",
+    "@hideokamoto/sequential-promise": "^1.1.0",
+    "aws-sdk": "^2.936.0",
     "deep-object-diff": "^1.1.0"
   }
 }

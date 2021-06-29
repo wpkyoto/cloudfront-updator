@@ -462,10 +462,10 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
-"@hideokamoto/sequential-promise@^1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@hideokamoto/sequential-promise/-/sequential-promise-1.0.1.tgz#a1793bfcfbcd8a08ecdbfee874b64dcb7c2342fa"
-  integrity sha512-ovFAaRTI7/nURQcBaoyTE6x6Wo+I1cegWN9mW0LHnDAghzeSTZGI0lJKgK71fB1E3Cs9ltYUUY8VVMdCYVMR5Q==
+"@hideokamoto/sequential-promise@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@hideokamoto/sequential-promise/-/sequential-promise-1.1.0.tgz#b4959d8ea077e0d56096c0d8feec7ead5c9604fa"
+  integrity sha512-Xo3jadBltQR+/IT06nQh5WxqeCuQyCFprS7yOVfKhz6iSfJSHzDCjv+cLOQTXNIalD3DnenRN5apr39jGUU+Jg==
 
 "@istanbuljs/load-nyc-config@^1.0.0":
   version "1.1.0"
@@ -1520,10 +1520,10 @@ atob@^2.1.2:
   resolved "https://registry.yarnpkg.com/atob/-/atob-2.1.2.tgz#6d9517eb9e030d2436666651e86bd9f6f13533c9"
   integrity sha512-Wm6ukoaOGJi/73p/cl2GvLjTI5JM1k/O14isD73YML8StrH/7/lRFgmg8nICZgD3bZZvjwCGxtMOD3wWNAu8cg==
 
-aws-sdk@^2.925.0:
-  version "2.925.0"
-  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.925.0.tgz#a352f3adc8274120fb31fa4fc04527d44b6107cf"
-  integrity sha512-dHXngzuSTZvIFWizWbU+ceZTAKmgodzEIi/AWbB+z0THKfxD3Iz/CJ7kZ7a9QyZv7X082L68vv3siMhXBMoTLA==
+aws-sdk@^2.936.0:
+  version "2.936.0"
+  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.936.0.tgz#b69f5db7c0c745f260b014415a8fbfb38c5e615d"
+  integrity sha512-X0kuyycck0fEPN5V0Vw1PmPIQ4BO0qupsL1El5jnXzXxNkf1cOmn5PMSxPXPsdcqua4w4h3sf143/yME0V9w8g==
   dependencies:
     buffer "4.9.2"
     events "1.1.1"

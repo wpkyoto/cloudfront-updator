@@ -44,6 +44,9 @@ After configure the client, just run the method.
 
 ```typescript
 await client.updateAllDistribution()
+
+// If you want to update distribution per 10 items.
+await client.updateAllDistribution(10)
 ```
 
 ### Upadte Specific Distribution
