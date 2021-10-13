@@ -89,7 +89,7 @@
   },
   "dependencies": {
     "@hideokamoto/sequential-promise": "^1.1.2",
-    "aws-sdk": "^2.936.0",
+    "aws-sdk": "^2.1006.0",
     "deep-object-diff": "^1.1.0"
   }
 }
