@@ -70,7 +70,7 @@
     "@typescript-eslint/typescript-estree": "4.26.1",
     "conventional-changelog-cli": "2.1.1",
     "conventional-github-releaser": "3.1.5",
-    "eslint": "7.28.0",
+    "eslint": "8.57.0",
     "eslint-config-standard": "16.0.3",
     "eslint-plugin-import": "2.23.4",
     "eslint-plugin-node": "11.1.0",
