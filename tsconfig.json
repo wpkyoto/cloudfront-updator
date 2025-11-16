@@ -1,37 +1,22 @@
 {
   "compilerOptions": {
-    "target": "es2016",
-    "module": "esnext",
+    "target": "ES2022",
+    "module": "ESNext",
+    "lib": ["ES2022"],
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
     "declaration": true,
-    "outDir": "./dist/",
-    "rootDir": "./libs/",
-    "lib": [ "esnext"],
+    "declarationMap": true,
+    "sourceMap": true,
+    "outDir": "./dist",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
     "strict": true,
-    "allowUnreachableCode": false,
-    "allowUnusedLabels": false,
-    "alwaysStrict": true,
-    "noImplicitAny": true,
-    "noImplicitThis": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "strictNullChecks": true,
-    "pretty": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-    "noEmitHelpers": true,
-    "importHelpers": true,
-    "moduleResolution": "node",
-    "esModuleInterop": true
+    "skipLibCheck": true,
+    "isolatedModules": true,
+    "allowSyntheticDefaultImports": true,
+    "types": ["vitest/globals", "node"]
   },
-  "include": [
-    "libs/"
-  ],
-  "exclude": [
-    "__tests__",
-    "docs",
-    "node_modules",
-    "./dist",
-    "./index.js",
-    "examples/"
-  ]
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist", "**/*.test.ts", "**/*.spec.ts"]
 }
