@@ -1,20 +1,55 @@
-name: "Release package"
-on: 
+name: Release
+
+on:
   push:
-    branches:
-      - master
+    branches: [main, master]
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+  id-token: write
 
 jobs:
-  release_package:
+  release:
+    name: Release
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v1
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
 
-      - name: "yarn install --frozen-lockfile"
-        run: yarn install --frozen-lockfile
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+          cache: npm
+          registry-url: https://registry.npmjs.org/
 
-      - name: "npm run semantic-release"
-        run: npm run semantic-release
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Verify the integrity of provenance attestations
+        run: npm audit signatures
+
+      - name: Run linter
+        run: npm run lint
+
+      - name: Run type check
+        run: npm run typecheck
+
+      - name: Run tests
+        run: npm test
+
+      - name: Build
+        run: npm run build
+
+      - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npx semantic-release
