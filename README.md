@@ -51,8 +51,8 @@ const updator = new CloudFrontUpdator({
   }
 }, {
   // Optional: Configuration
-  debugMode: false, // Enable dry-run mode
-  allowSensitiveAction: false, // Allow enabling/disabling distributions
+  debugMode: false, // Dry-run mode (set to true to enable)
+  allowSensitiveAction: false, // Allow enable/disable operations when true
   taskType: "sequential" // "sequential" or "parallel"
 });
 ```
