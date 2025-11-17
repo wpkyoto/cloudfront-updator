@@ -1,0 +1,16 @@
+# Code owners for cloudfront-updator
+# These owners will be requested for review when someone opens a pull request.
+
+* @hideokamoto
+
+# GitHub Actions workflows
+/.github/ @hideokamoto
+
+# Package configuration
+/package.json @hideokamoto
+/package-lock.json @hideokamoto
+
+# Build and tooling configuration
+/vite.config.ts @hideokamoto
+/tsconfig.json @hideokamoto
+/biome.json @hideokamoto
