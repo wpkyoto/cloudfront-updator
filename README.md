@@ -169,7 +169,7 @@ constructor(
 - `updateDistribution(distributionId: string): Promise<void>` - Update a single distribution
 - `updateAllDistributions(): Promise<void>` - Update all distributions matching the filter
 - `getDiff(): DiffResult | null` - Get the diff from the last dry-run execution
-- `getDistributionConfig(distributionId: string): Promise<{config, ETag}>` - Get distribution config
+- `getDistributionConfig(distributionId: string): Promise<{config: DistributionConfig, ETag: string}>` - Get distribution config
 
 ### Types
 
@@ -186,11 +186,18 @@ interface CloudFrontUpdatorConfig {
   debugMode?: boolean;
   allowSensitiveAction?: boolean;
   taskType?: "parallel" | "sequential";
+  concurrencyLimit?: number; // Default: 5 (for parallel execution)
 }
 
 interface CloudFrontUpdatorWorkers {
   updator: UpdatorFunction;
   filter?: FilterCondition;
+}
+
+interface DiffResult {
+  added: Record<string, any>;
+  deleted: Record<string, any>;
+  updated: Record<string, any>;
 }
 ```
 

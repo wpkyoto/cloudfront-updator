@@ -1,8 +1,10 @@
-import type {
-  CloudFrontClient,
-  DistributionConfig,
-  DistributionSummary,
+import {
+  type CloudFrontClient,
+  type DistributionConfig,
+  type DistributionSummary,
   GetDistributionConfigCommand,
+  ListDistributionsCommand,
+  UpdateDistributionCommand,
 } from "@aws-sdk/client-cloudfront";
 import { describe, expect, it, vi } from "vitest";
 import { CloudFrontUpdator } from "./index";
@@ -256,21 +258,21 @@ describe("CloudFrontUpdator - TDD", () => {
       let updateCount = 0;
 
       const mockClient = {
-        send: vi.fn().mockImplementation((command: any) => {
-          if (command.constructor.name === "ListDistributionsCommand") {
+        send: vi.fn().mockImplementation((command: unknown) => {
+          if (command instanceof ListDistributionsCommand) {
             return Promise.resolve({
               DistributionList: {
                 Items: mockDistributions,
               },
             });
           }
-          if (command.constructor.name === "GetDistributionConfigCommand") {
+          if (command instanceof GetDistributionConfigCommand) {
             return Promise.resolve({
               DistributionConfig: mockConfig,
               ETag: "test-etag",
             });
           }
-          if (command.constructor.name === "UpdateDistributionCommand") {
+          if (command instanceof UpdateDistributionCommand) {
             updateCount++;
             return Promise.resolve({});
           }
@@ -304,15 +306,15 @@ describe("CloudFrontUpdator - TDD", () => {
       ];
 
       const mockClient = {
-        send: vi.fn().mockImplementation((command: any) => {
-          if (command.constructor.name === "ListDistributionsCommand") {
+        send: vi.fn().mockImplementation((command: unknown) => {
+          if (command instanceof ListDistributionsCommand) {
             return Promise.resolve({
               DistributionList: {
                 Items: mockDistributions,
               },
             });
           }
-          if (command.constructor.name === "GetDistributionConfigCommand") {
+          if (command instanceof GetDistributionConfigCommand) {
             return Promise.resolve({
               DistributionConfig: mockConfig,
               ETag: "test-etag",

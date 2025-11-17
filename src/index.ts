@@ -7,6 +7,8 @@ import {
   ListDistributionsCommand,
   UpdateDistributionCommand,
 } from "@aws-sdk/client-cloudfront";
+import { detailedDiff } from "deep-object-diff";
+import pLimit from "p-limit";
 
 export type UpdatorFunction = (
   config: DistributionConfig,
@@ -18,6 +20,7 @@ export interface CloudFrontUpdatorConfig {
   debugMode?: boolean;
   allowSensitiveAction?: boolean;
   taskType?: "parallel" | "sequential";
+  concurrencyLimit?: number;
 }
 
 export interface CloudFrontUpdatorWorkers {
@@ -25,7 +28,7 @@ export interface CloudFrontUpdatorWorkers {
   filter?: FilterCondition;
 }
 
-interface DiffResult {
+export interface DiffResult {
   added: Record<string, any>;
   deleted: Record<string, any>;
   updated: Record<string, any>;
@@ -38,6 +41,7 @@ export class CloudFrontUpdator {
   private readonly debugMode: boolean;
   private readonly allowSensitiveAction: boolean;
   private readonly taskType: "parallel" | "sequential";
+  private readonly concurrencyLimit: number;
   private diff: DiffResult | null = null;
 
   constructor(
@@ -51,6 +55,7 @@ export class CloudFrontUpdator {
     this.debugMode = config.debugMode ?? false;
     this.allowSensitiveAction = config.allowSensitiveAction ?? false;
     this.taskType = config.taskType ?? "sequential";
+    this.concurrencyLimit = config.concurrencyLimit ?? 5;
   }
 
   async getDistributionConfig(
@@ -72,27 +77,6 @@ export class CloudFrontUpdator {
     };
   }
 
-  private calculateDiff(before: DistributionConfig, after: DistributionConfig): DiffResult {
-    const result: DiffResult = { added: {}, deleted: {}, updated: {} };
-
-    const allKeys = new Set([...Object.keys(before), ...Object.keys(after)]);
-
-    for (const key of allKeys) {
-      const beforeValue = (before as any)[key];
-      const afterValue = (after as any)[key];
-
-      if (beforeValue === undefined && afterValue !== undefined) {
-        result.added[key] = afterValue;
-      } else if (beforeValue !== undefined && afterValue === undefined) {
-        result.deleted[key] = beforeValue;
-      } else if (JSON.stringify(beforeValue) !== JSON.stringify(afterValue)) {
-        result.updated[key] = afterValue;
-      }
-    }
-
-    return result;
-  }
-
   getDiff(): DiffResult | null {
     return this.diff;
   }
@@ -100,7 +84,8 @@ export class CloudFrontUpdator {
   async updateDistribution(distributionId: string): Promise<void> {
     const { config: originalConfig, ETag } = await this.getDistributionConfig(distributionId);
 
-    const beforeConfig = { ...originalConfig };
+    // Deep copy to preserve the original state for diff calculation
+    const beforeConfig = structuredClone(originalConfig);
     const beforeEnabled = originalConfig.Enabled;
     const updatedConfig = await this.updator(originalConfig);
 
@@ -109,7 +94,8 @@ export class CloudFrontUpdator {
     }
 
     if (this.debugMode) {
-      this.diff = this.calculateDiff(beforeConfig, updatedConfig);
+      // Use deep-object-diff for granular diff calculation
+      this.diff = detailedDiff(beforeConfig, updatedConfig) as DiffResult;
       return;
     }
 
@@ -137,13 +123,18 @@ export class CloudFrontUpdator {
         }
       }
     } else {
+      // Limit concurrency to avoid API throttling
+      const limit = pLimit(this.concurrencyLimit);
+
       await Promise.all(
-        distributions.map(async (summary) => {
-          if (!summary.Id) return;
-          if (await this.filter(summary)) {
-            await this.updateDistribution(summary.Id);
-          }
-        }),
+        distributions.map((summary) =>
+          limit(async () => {
+            if (!summary.Id) return;
+            if (await this.filter(summary)) {
+              await this.updateDistribution(summary.Id);
+            }
+          }),
+        ),
       );
     }
   }

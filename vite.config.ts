@@ -11,13 +11,13 @@ export default defineConfig({
       fileName: (format) => `index.${format === "es" ? "js" : "cjs"}`,
     },
     rollupOptions: {
-      external: ["@aws-sdk/client-cloudfront"],
+      external: ["@aws-sdk/client-cloudfront", "deep-object-diff", "p-limit"],
       output: {
         exports: "named",
       },
     },
     sourcemap: true,
-    minify: false,
+    minify: "esbuild",
   },
   plugins: [
     dts({
