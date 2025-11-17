@@ -13,9 +13,7 @@
       "require": "./dist/index.cjs"
     }
   },
-  "files": [
-    "dist"
-  ],
+  "files": ["dist"],
   "engines": {
     "node": ">=18.0.0"
   },
@@ -32,13 +30,7 @@
     "prepublishOnly": "npm run lint && npm run typecheck && npm run test && npm run build",
     "release": "np"
   },
-  "keywords": [
-    "aws",
-    "cloudfront",
-    "aws-sdk-v3",
-    "distribution",
-    "cdn"
-  ],
+  "keywords": ["aws", "cloudfront", "aws-sdk-v3", "distribution", "cdn"],
   "bugs": {
     "url": "https://github.com/wpkyoto/cloudfront-updator/issues"
   },
@@ -61,12 +53,15 @@
     "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/git": "^10.0.1",
     "@types/node": "^22.9.3",
-    "@vitest/coverage-v8": "^2.1.8",
-    "np": "^10.0.10",
+    "@vitest/coverage-v8": "^4.0.9",
+    "np": "^10.2.0",
     "semantic-release": "^24.2.0",
     "typescript": "^5.7.2",
-    "vite": "^6.0.3",
+    "vite": "^7.2.2",
     "vite-plugin-dts": "^4.3.0",
-    "vitest": "^2.1.8"
+    "vitest": "^4.0.9"
+  },
+  "overrides": {
+    "tmp": "^0.2.5"
   }
 }
