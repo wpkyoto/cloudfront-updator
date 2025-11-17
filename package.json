@@ -13,9 +13,7 @@
       "require": "./dist/index.cjs"
     }
   },
-  "files": [
-    "dist"
-  ],
+  "files": ["dist"],
   "engines": {
     "node": ">=18.0.0"
   },
@@ -32,13 +30,7 @@
     "prepublishOnly": "npm run format && npm run lint && npm run typecheck && npm run test && npm run build",
     "release": "np"
   },
-  "keywords": [
-    "aws",
-    "cloudfront",
-    "aws-sdk-v3",
-    "distribution",
-    "cdn"
-  ],
+  "keywords": ["aws", "cloudfront", "aws-sdk-v3", "distribution", "cdn"],
   "bugs": {
     "url": "https://github.com/wpkyoto/cloudfront-updator/issues"
   },
