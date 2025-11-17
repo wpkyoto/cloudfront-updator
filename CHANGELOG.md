@@ -1,3 +1,28 @@
+# [3.0.0](https://github.com/wpkyoto/cloudfront-updator/compare/v2.2.0...v3.0.0) (2025-11-17)
+
+
+### Features
+
+* migrate from yarn to npm for package management ([e043e26](https://github.com/wpkyoto/cloudfront-updator/commit/e043e26))
+* add `np` package for streamlined release management ([e043e26](https://github.com/wpkyoto/cloudfront-updator/commit/e043e26))
+* add `release` script to package.json using np ([e043e26](https://github.com/wpkyoto/cloudfront-updator/commit/e043e26))
+
+
+### Dependencies
+
+* update `@vitest/coverage-v8` from ^2.1.8 to ^4.0.9 ([818443e](https://github.com/wpkyoto/cloudfront-updator/commit/818443e))
+* update `vite` from ^6.0.3 to ^7.2.2 ([818443e](https://github.com/wpkyoto/cloudfront-updator/commit/818443e))
+* update `vitest` from ^2.1.8 to ^4.0.9 ([818443e](https://github.com/wpkyoto/cloudfront-updator/commit/818443e))
+* add `np` ^10.2.0 as dev dependency ([e043e26](https://github.com/wpkyoto/cloudfront-updator/commit/e043e26))
+
+
+### Build System
+
+* improve `prepublishOnly` script to include format step ([e043e26](https://github.com/wpkyoto/cloudfront-updator/commit/e043e26))
+* add `overrides` section for `tmp` package ([e043e26](https://github.com/wpkyoto/cloudfront-updator/commit/e043e26))
+* remove `yarn.lock` and update `package-lock.json` ([e043e26](https://github.com/wpkyoto/cloudfront-updator/commit/e043e26))
+
+
 # [2.2.0](https://github.com/wpkyoto/cloudfront-updator/compare/v2.1.1...v2.2.0) (2025-11-17)
 
 
