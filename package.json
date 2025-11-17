@@ -1,6 +1,6 @@
 {
   "name": "cloudfront-updator",
-  "version": "3.0.0",
+  "version": "2.2.0",
   "description": "Modern CloudFront distribution updator with AWS SDK v3",
   "type": "module",
   "main": "./dist/index.cjs",
