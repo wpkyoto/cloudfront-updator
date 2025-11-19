@@ -46,7 +46,7 @@
   "dependencies": {
     "@aws-sdk/client-cloudfront": "^3.932.0",
     "deep-object-diff": "^1.1.9",
-    "p-limit": "^6.1.0"
+    "p-limit": "^7.2.0"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
